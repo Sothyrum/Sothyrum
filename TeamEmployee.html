@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        .modal {
+            display: none;
+        }
+        .profile-image {
+            width: 60px;  /* Increased size */
+            height: 60px; /* Increased size */
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: -15px; /* Adjust overlap */
+            border: 2px solid white; /* Border for visual separation */
+        }
+        .profile-grid {
+            display: flex;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="flex justify-between items-center mb-6">
+        <div class="flex space-x-4">
+            <button class="px-4 py-2 bg-white text-gray-700 rounded-md">All</button>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-md">Teams</button>
+            <button class="px-4 py-2 bg-white text-gray-700 rounded-md">Offices</button>
+        </div>
+        <button class="px-4 py-2 bg-green-600 text-white rounded-md" onclick="toggleAddTeamModal(true)">+ Add Team</button>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 Team" id="team-grid">
+        <div class="bg-white p-4 rounded-lg shadow-md" data-team-name="PHP">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-green-700 font-bold">PHP</h2>
+                <div class="flex space-x-2">
+                    <button class="text-blue-600" onclick="openEditModal('PHP', this)"><i class="fas fa-edit"></i></button>
+                    <button class="text-red-600" onclick="deleteTeam(this)"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="profile-grid"> 
+            </div>
+            <button class="px-4 py-2 bg-orange-500 text-white rounded-md" onclick="toggleAddMembersModal('PHP')">Add Members</button>
+        </div>
+    </div>
+    <!-- Add Team Modal -->
+    <div id="add-team-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center modal" style="display: none;">
+        <div class="bg-white rounded-lg p-6 w-96" style="overflow: hidden;">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">Add New Team</h2>
+                <button onclick="toggleAddTeamModal(false)"><i class="fas fa-times"></i></button>
+            </div>
+            <input type="text" id="team-name" placeholder="Team Name" class="w-full border border-gray-300 rounded-md p-2 mb-4" required>
+            <div class="flex justify-end space-x-2">
+                <button class="px-4 py-2 bg-orange-500 text-white rounded-md" onclick="addTeam()">Add</button>
+                <button class="px-4 py-2 bg-red-500 text-white rounded-md" onclick="toggleAddTeamModal(false)">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Members Modal -->
+    <div id="add-members-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center modal" style="display: none;">
+        <div class="bg-white rounded-lg p-6 w-96">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">Add Members to <span id="team-name-display"></span></h2>
+                <button onclick="toggleAddMembersModal('')"><i class="fas fa-times"></i></button>
+            </div>
+            <input type="text" id="member-name" placeholder="Member Name" class="w-full border border-gray-300 rounded-md p-2 mb-4" required>
+            <div class="flex justify-end space-x-2">
+                <button class="px-4 py-2 bg-orange-500 text-white rounded-md" onclick="addMember()">Add</button>
+                <button class="px-4 py-2 bg-red-500 text-white rounded-md" onclick="toggleAddMembersModal('')">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentEditTeamElement;
+
+        function toggleAddTeamModal(show) {
+            const modal = document.getElementById('add-team-modal');
+            modal.style.display = show ? 'flex' : 'none';
+        }
+
+        function toggleAddMembersModal(teamName) {
+            const modal = document.getElementById('add-members-modal');
+            document.getElementById('team-name-display').innerText = teamName;
+            modal.style.display = teamName ? 'flex' : 'none';
+        }
+
+        function openEditModal(teamName, element) {
+            currentEditTeamElement = element.closest('.bg-white');
+            document.getElementById('edit-team-name').value = teamName;
+        }
+
+        function deleteTeam(element) {
+            const teamCard = element.closest('.bg-white');
+            teamCard.remove();
+        }
+
+        function addTeam() {
+            const teamName = document.getElementById('team-name').value;
+            if (teamName.trim() === '') {
+                alert('Please enter a team name.');
+                return;
+            }
+            
+            const teamGrid = document.getElementById('team-grid');
+            const newTeamCard = document.createElement('div');
+            newTeamCard.className = "bg-white p-4 rounded-lg shadow-md";
+            newTeamCard.setAttribute('data-team-name', teamName);
+            
+            newTeamCard.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-green-700 font-bold">${teamName}</h2>
+                    <div class="flex space-x-2">
+                        <button class="text-blue-600" onclick="openEditModal('${teamName}', this)"><i class="fas fa-edit"></i></button>
+                        <button class="text-red-600" onclick="deleteTeam(this)"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="profile-grid">
+
+                </div>
+                <button class="px-4 py-2 bg-orange-500 text-white rounded-md" onclick="toggleAddMembersModal('${teamName}')">Add Members</button>
+            `;
+            teamGrid.appendChild(newTeamCard);
+            document.getElementById('team-name').value = '';
+            toggleAddTeamModal(false);
+        }
+        function addMember() {
+            const memberName = document.getElementById('member-name').value;
+            if (memberName.trim() === '') {
+                alert('Please enter a member name.');
+                return;
+            }
+            const teamCard = document.querySelector(`[data-team-name="${document.getElementById('team-name-display').innerText}"]`);
+            const memberImage = document.createElement('img');
+            memberImage.src = "https://via.placeholder.com/60";
+            memberImage.alt = memberName;
+            memberImage.className = "profile-image";
+            const memberContainer = teamCard.querySelector('.profile-grid');
+            memberContainer.appendChild(memberImage);
+            document.getElementById('member-name').value = '';
+            toggleAddMembersModal('');
+        }
+    </script>
+</body>
+</html>

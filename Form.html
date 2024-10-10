@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="return loginUser();">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+    <div id="message"></div>
+
+    <script>
+        const SPREADSHEET_ID = '1_q2btD4HUgGOrg_BPzCFC4A9BvvaML78fh3LUVKWn3k'; // Replace with your Google Sheet ID
+        const API_KEY = 'https://script.google.com/macros/s/AKfycbyK8lCrvcQW58YoQV0AxCRv_4MxjydEcByI5_TMBIWrxD9bRxFzJLpn15mcbQutycOC/exec'; // Replace with your Google API key
+
+        async function fetchData() {
+            const range = 'FORMLOGIN!A:B'; // Adjust this range if necessary
+            const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${https://script.google.com/macros/s/AKfycbyK8lCrvcQW58YoQV0AxCRv_4MxjydEcByI5_TMBIWrxD9bRxFzJLpn15mcbQutycOC/exec}`);
+            const data = await response.json();
+            return data.values;
+        }
+
+        async function loginUser() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const users = await fetchData();
+
+            const user = users.find(row => row[0] === email && row[1] === password);
+
+            if (user) {
+                document.getElementById('message').innerText = 'Login successful!';
+            } else {
+                document.getElementById('message').innerText = 'Invalid email or password.';
+            }
+
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>

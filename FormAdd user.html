@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1>Create Account</h1>
+        <form id="registrationForm">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status:</label>
+                <input type="text" class="form-control" id="status" required>
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role:</label>
+                <input type="text" class="form-control" id="role" required>
+            </div>
+            <div class="mb-3">
+                <label for="position" class="form-label">Position:</label>
+                <input type="text" class="form-control" id="position" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" id="deleteAccountBtn">Delete Account</button>
+        </form>
+
+        <h2 class="mt-5">User Information</h2>
+        <table class="table table-bordered mt-3" id="userTable">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Role</th>
+                    <th>Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- User data will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const status = document.getElementById('status').value;
+            const role = document.getElementById('role').value;
+            const position = document.getElementById('position').value;
+
+            // Save data to local storage
+            localStorage.setItem('username', username);
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+            localStorage.setItem('status', status);
+            localStorage.setItem('role', role);
+            localStorage.setItem('position', position);
+
+            alert('Account created successfully!');
+            updateUserTable(); // Update the table with the new user data
+        });
+
+        document.getElementById('deleteAccountBtn').addEventListener('click', function() {
+            localStorage.removeItem('username');
+            localStorage.removeItem('email');
+            localStorage.removeItem('password');
+            localStorage.removeItem('status');
+            localStorage.removeItem('role');
+            localStorage.removeItem('position');
+            alert('Account deleted successfully!');
+            clearUserTable(); // Clear the table after account deletion
+        });
+
+        function updateUserTable() {
+            const userTableBody = document.querySelector('#userTable tbody');
+            userTableBody.innerHTML = ''; // Clear existing rows
+
+            // Get user data from local storage
+            const username = localStorage.getItem('username');
+            const email = localStorage.getItem('email');
+            const status = localStorage.getItem('status');
+            const role = localStorage.getItem('role');
+            const position = localStorage.getItem('position');
+
+            if (username) { // Check if there is a username saved in local storage
+                const row = userTableBody.insertRow();
+                row.insertCell(0).textContent = username;
+                row.insertCell(1).textContent = email;
+                row.insertCell(2).textContent = status;
+                row.insertCell(3).textContent = role;
+                row.insertCell(4).textContent = position;
+            }
+        }
+
+        function clearUserTable() {
+            const userTableBody = document.querySelector('#userTable tbody');
+            userTableBody.innerHTML = ''; // Clear the table body
+        }
+    </script>
+</body>
+</html>

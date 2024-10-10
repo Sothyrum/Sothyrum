@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>001</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        height: 100vh;
+      }
+      .sidebar {
+        background-color: rgb(3, 42, 71);
+      }
+      .sidebar .nav-link {
+        color: #fff;
+      }
+      .fas {
+        color: white;
+      }
+      .content {
+        padding: 10px; /* Padding on the main content */
+      }
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none; /* Hide sidebar on small screens */
+        }
+        .main-content {
+          width: 100%; /* Full width on small screens */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="d-flex" style="height: 100vh">
+      <div class="nav-bar d-none d-md-block" style="width: 15%; height: 100vh; background-color: rgb(3, 42, 71);">
+      <nav class="sidebar" id="sidebar">
+        <h2 class="text-white text-center">Dashboard</h2>
+        <ul class="nav flex-column">
+          <li class="nav-item" onclick="toggleContent('content1')">
+              <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          </li>
+          <li class="nav-item" onclick="toggleContent('content2')">
+              <a class="nav-link active" href="#"><i class="fas fa-inbox"></i> Inbox</a>
+          </li>
+          <li class="nav-item" onclick="toggleContent('content3')">
+              <a class="nav-link active" href="#"><i class="fas fa-calendar-alt"></i> Calendar & Todos</a>
+          </li>
+          <li class="nav-item" onclick="toggleContent('content4')">
+              <a class="nav-link active" href="#"><i class="fas fa-clock"></i> Time & Attendance</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#userMenu" role="button" aria-expanded="false" aria-controls="userMenu"><i class="fas fa-user-friends"></i> Recruitment</a>
+              <div class="collapse" id="userMenu">
+                <ul class="nav flex-column ms-3">
+                    <li class="nav-item" onclick="toggleContent('content5')"><a class="nav-link" href="#"><i class="fas fa-briefcase"></i> Jobs</a></li>
+                    <li class="nav-item" onclick="toggleContent('content6')"><a class="nav-link" href="#"><i class="fas fa-user-check"></i> Candidates</a></li>
+                    <li class="nav-item" onclick="toggleContent('content7')"><a class="nav-link" href="#"><i class="fas fa-user-plus"></i> My Referrals</a></li>
+                    <li class="nav-item" onclick="toggleContent('content8')"><a class="nav-link" href="#"><i class="fas fa-briefcase"></i> Career Sites</a></li>
+                </ul>
+              </div>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#settingsMenu" role="button" aria-expanded="false" aria-controls="settingsMenu"><i class="fas fa-building"></i> Organization</a>
+              <div class="collapse" id="settingsMenu">
+                <ul class="nav flex-column ms-3">
+                    <li class="nav-item" onclick="toggleContent('content9')"><a class="nav-link" href="#"><i class="fas fa-user-tag"></i> Employee</a></li>
+                    <li class="nav-item" onclick="toggleContent('content10')"><a class="nav-link" href="#"><i class="fas fa-th-list"></i> Structure</a></li>
+                    <li class="nav-item" onclick="toggleContent('content11')"><a class="nav-link" href="#"><i class="fas fa-file-alt"></i> Report</a></li>
+                </ul>
+              </div>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#moreMenu" role="button" aria-expanded="false" aria-controls="moreMenu"><i class="fas fa-money-bill"></i> Finances</a>
+              <div class="collapse" id="moreMenu">
+                <ul class="nav flex-column ms-3">
+                    <li class="nav-item" onclick="toggleContent('content12')"><a class="nav-link" href="#"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                    <li class="nav-item" onclick="toggleContent('content13')"><a class="nav-link" href="#"><i class="fas fa-file-invoice"></i> Invoices</a></li>
+                    <li class="nav-item" onclick="toggleContent('content14')"><a class="nav-link" href="#"><i class="fas fa-credit-card"></i> Billing</a></li>
+                </ul>
+              </div>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#helpMenu" role="button" aria-expanded="false" aria-controls="helpMenu"><i class="fas fa-sitemap"></i> Departments</a>
+              <div class="collapse" id="helpMenu">
+                <ul class="nav flex-column ms-3">
+                    <li class="nav-item" onclick="toggleContent('content15')"><a class="nav-link" href="#"><i class="fas fa-chart-line"></i> Sales & Marketing</a></li>
+                    <li class="nav-item" onclick="toggleContent('content16')"><a class="nav-link" href="#"><i class="fas fa-user-friends"></i> HR & Admin</a></li>
+                    <li class="nav-item" onclick="toggleContent('content17')"><a class="nav-link" href="#"><i class="fas fa-calculator"></i> Finance & Account</a></li>
+                    <li class="nav-item" onclick="toggleContent('content18')"><a class="nav-link" href="#"><i class="fas fa-shield-alt"></i> Security</a></li>
+                    <li class="nav-item" onclick="toggleContent('content19')"><a class="nav-link" href="#"><i class="fas fa-university"></i> Banking</a></li>
+                    <li class="nav-item" onclick="toggleContent('content20')"><a class="nav-link" href="#"><i class="fas fa-home"></i> Property Management</a></li>
+                </ul>
+              </div>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#settingsDropdown" role="button" aria-expanded="false" aria-controls="settingsDropdown"><i class="fas fa-cog"></i> Settings</a>
+              <div class="collapse" id="settingsDropdown">
+                <ul class="nav flex-column ms-3">
+                    <li class="nav-item" onclick="toggleContent('content21')"><a class="nav-link" href="#"><i class="fas fa-user-cog"></i> Profile Settings</a></li>
+                    <li class="nav-item" onclick="toggleContent('content22')"><a class="nav-link" href="#"><i class="fas fa-user-shield"></i> Account Management</a></li>
+                    <li class="nav-item" onclick="toggleContent('content23')"><a class="nav-link" href="#"><i class="fas fa-bell"></i> Notification Preferences</a></li>
+                    <li class="nav-item" onclick="toggleContent('content24')"><a class="nav-link" href="#"><i class="fas fa-lock"></i> Access Control</a></li>
+                </ul>
+              </div>
+          </li>
+        </ul>
+      </nav>
+      </div>
+      <div class="main-content" style="width: 85%; height: 100vh">
+          <div id="content1" class="content" style="display: block;">
+              <h3 style="margin-left:50px;">Welcome back dear.</h3>
+              <p style="margin-left:50px;">Welcome to your admin dashboard!</p>
+              <div class="Default-dashboard">
+                <div class="row">
+                  <div class="col-md-4">
+                      <div class="card mb-4">
+                          <div class="card-body">
+                              <h5 class="card-title">Total Users</h5>
+                              <p class="card-text">150</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="card mb-4">
+                          <div class="card-body">
+                              <h5 class="card-title">New Orders</h5>
+                              <p class="card-text">25</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="card mb-4">
+                          <div class="card-body">
+                              <h5 class="card-title">Pending Issues</h5>
+                              <p class="card-text">5</p>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>  
+          </div>
+          <div id="content2" class="content" style="display: none;">
+              <h2>Inbox</h2>
+              <p>This section contains your incoming messages and notifications.</p>
+          </div>
+
+          <div id="content3" class="content" style="display: none;">
+              <h2>Calendar & Todos</h2>
+              <p>This section displays your calendar and to-do list.</p>
+          </div>
+
+          <div id="content4" class="content" style="display: none;">
+              <h2>Time & Attendance</h2>
+              <p>This section provides information related to time tracking and attendance.</p>
+          </div>
+
+          <div id="content5" class="content" style="display: none;">
+              <h2>Jobs</h2>
+              <p>This area showcases available job listings and recruitment information.</p>
+          </div>
+
+          <div id="content6" class="content" style="display: none;">
+              <h2>Candidates</h2>
+              <p>Manage candidates and view their applications in this section.</p>
+          </div>
+          <div id="content7" class="content" style="display: none;">
+              <h2>My Referrals</h2>
+              <p>Track your referrals and their status here.</p>
+          </div>
+
+          <div id="content8" class="content" style="display: none;">
+              <h2>Career Sites</h2>
+              <p>Manage your career site listings and settings in this section.</p>
+          </div>
+
+          <div id="content9" class="content" style="display: none;padding: 0px;">
+            <h3 style="font-family: roboto;font-weight: bold;margin-top: 5px;margin-left: 20px;">Information Employees</h3>
+              <iframe src="employee copy.html" frameborder="0" style="width: 100%; height: 100vh;"></iframe>
+          </div>
+
+          <div id="content10" class="content" style="display: none;">
+              <h2>Structure</h2>
+              <iframe src="employee-grid.html" frameborder="0" style="width: 100%;height: 100vh;"></iframe>
+          </div>
+
+          <div id="content11" class="content" style="display: none;">
+              <h2>Report</h2>
+              <p>Generate and view organizational reports in this section.</p>
+          </div>
+
+          <div id="content12" class="content" style="display: none;">
+              <h2>Payroll</h2>
+              <p>Manage payroll information and operations here.</p>
+          </div>
+
+          <div id="content13" class="content" style="display: none;">
+              <h2>Invoices</h2>
+              <p>Keep track of all invoices issued and received in this section.</p>
+          </div>
+
+          <div id="content14" class="content" style="display: none;">
+              <h2>Billing</h2>
+              <p>Manage your billing information and transactions here.</p>
+          </div>
+
+          <div id="content15" class="content" style="display: none;">
+              <h2>Sales & Marketing</h2>
+              <p>Insights and data related to sales and marketing campaigns can be found here.</p>
+          </div>
+
+          <div id="content16" class="content" style="display: none;">
+              <iframe src="User&Admin.html" frameborder="0" style="width: 100%; height: 100vh;"></iframe>
+          </div>
+
+          <div id="content17" class="content" style="display: none;">
+              <h2>Finance & Account</h2>
+              <p>Maintain your financial records and accounting information here.</p>
+          </div>
+
+          <div id="content18" class="content" style="display: none;">
+              <h2>Security</h2>
+              <p>Review and manage security protocols and information in this section.</p>
+          </div>
+
+          <div id="content19" class="content" style="display: none;">
+              <h2>Banking</h2>
+              <p>Manage banking information and transactions within this section.</p>
+          </div>
+
+          <div id="content20" class="content" style="display: none;">
+              <h2>Property Management</h2>
+              <p>Track and manage property-related data here.</p>
+          </div>
+
+          <div id="content21" class="content" style="display: none;">
+              <h2>Profile Settings</h2>
+              <p>Update your profile settings and preferences in this section.</p>
+          </div>
+
+          <div id="content22" class="content" style="display: none;">
+              <h2>Account Management</h2>
+              <p>Manage your account details and security settings here.</p>
+          </div>
+
+          <div id="content23" class="content" style="display: none;">
+              <h2>Notification Preferences</h2>
+              <p>Set your preferences for notifications in this section.</p>
+          </div>
+
+          <div id="content24" class="content" style="display: none;">
+              <h2>Access Control</h2>
+              <p>Manage user permissions and access control settings here.</p>
+          </div>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script>
+      function toggleContent(contentId) {
+        // Hide all content divs
+        const contentDivs = document.querySelectorAll('.content');
+        contentDivs.forEach(div => {
+          div.style.display = 'none';
+        });
+        
+        // Show the selected content div
+        const contentToShow = document.getElementById(contentId);
+        if (contentToShow) {
+          contentToShow.style.display = 'block';
+        }
+      }
+    </script>
+  </body>
+</html>

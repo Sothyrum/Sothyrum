@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>HR SYSTEM</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.4/r-3.0.2/datatables.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="contain p-4">
+       <div> <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addDataModal">Add Data</button></div>
+        <!-- Add Data Modal -->
+        <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true" style="width: 100%;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDataModalLabel">Add New Entry</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="dataForm">
+                            <div class="mb-3">
+                                <label for="profile" class="form-label">Profile Image</label>
+                                <input type="file" class="form-control" id="profile" accept="image/*" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="position" class="form-label">Position</label>
+                                <input type="text" class="form-control" id="position" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="office" class="form-label">Office</label>
+                                <input type="text" class="form-control" id="office" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="age" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="salary" class="form-label">Salary</label>
+                                <input type="number" class="form-control" id="salary" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="extn" class="form-label">Extn.</label>
+                                <input type="text" class="form-control" id="extn" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" required />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submitData">Add Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Preview Modal -->
+        <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="previewModalLabel">Preview Entry</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="previewContent">
+                        <!-- Preview data will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editDataModal" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editDataModalLabel">Edit Entry</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editDataForm">
+                            <input type="hidden" id="editRowId" />
+                            <div class="mb-3">
+                                <label for="editProfile" class="form-label">Profile Image</label>
+                                <input type="file" class="form-control" id="editProfile" accept="image/*" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="editFirstName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="editLastName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editPosition" class="form-label">Position</label>
+                                <input type="text" class="form-control" id="editPosition" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editOffice" class="form-label">Office</label>
+                                <input type="text" class="form-control" id="editOffice" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editAge" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="editAge" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editStartDate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="editStartDate" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editSalary" class="form-label">Salary</label>
+                                <input type="number" class="form-control" id="editSalary" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editExtn" class="form-label">Extn.</label>
+                                <input type="text" class="form-control" id="editExtn" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="editEmail" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="editEmail" required />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updateData">Update Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table id="example" class="display nowrap table table-hover table-striped table-bordered table-sm" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Age</th>
+                    <th>Start Date</th>
+                    <th>Salary</th>
+                    <th>Extn.</th>
+                    <th>E-mail</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be added here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.4/r-3.0.2/datatables.min.js"></script>
+    <script>
+        const table = new DataTable("#example", {
+            responsive: true,
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/2.1.4/i18n/es-ES.json",
+            },
+        });
+        // Load existing data from localStorage on page load
+        window.onload = function() {
+            const storedData = JSON.parse(localStorage.getItem("hrData"));
+            if (storedData) {
+                storedData.forEach(rowData => {
+                    table.row.add(rowData).draw();
+                });
+            }
+        };
+        // Add new data
+        document.getElementById("submitData").addEventListener("click", () => {
+            const profileInput = document.getElementById("profile");
+            const profileImageUrl = profileInput.files.length > 0 ? URL.createObjectURL(profileInput.files[0]) : '';
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const position = document.getElementById("position").value;
+            const office = document.getElementById("office").value;
+            const age = document.getElementById("age").value;
+            const startDate = document.getElementById("startDate").value;
+            const salary = document.getElementById("salary").value;
+            const extn = document.getElementById("extn").value;
+            const email = document.getElementById("email").value;
+            // Add new row to the DataTable
+            const newRow = [
+                `<img src="${profileImageUrl}" alt="Profile Image" style="width: 60px; height: 60px;border-radius: 50%;display: flex; justify-content: center; align-items: center;" />`,
+                firstName,
+                lastName,
+                position,
+                office,
+                age,
+                startDate,
+                salary,
+                extn,
+                email,
+                `
+                <button class="btn btn-info btn-sm preview-row">Preview</button>
+                <button class="btn btn-warning btn-sm edit-row">Edit</button>
+                <button class="btn btn-danger btn-sm delete-row">Delete</button>
+                `,
+            ];
+            table.row.add(newRow).draw();
+
+            // Save to localStorage
+            saveTableData();
+
+            // Clear the form
+            document.getElementById("dataForm").reset();
+            // Close the modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById("addDataModal"));
+            modal.hide();
+        });
+        // Function to save table data to localStorage
+        function saveTableData() {
+            const data = [];
+            table.rows().every(function() {
+                data.push(this.data());
+            });
+            localStorage.setItem("hrData", JSON.stringify(data));
+        }
+
+        // Event delegation to handle actions
+        document.querySelector("#example tbody").addEventListener("click", function (e) {
+            const row = e.target.closest("tr");
+            if (e.target.classList.contains("preview-row")) {
+                const rowData = table.row(row).data();
+                document.getElementById("previewContent").innerHTML = `
+                    <p ><strong>Profile:</strong> ${rowData[0]}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                    <p><strong>Position:</strong> ${rowData[3]}</p>
+                    <p><strong>Office:</strong> ${rowData[4]}</p>
+                    <p><strong>Age:</strong> ${rowData[5]}</p>
+                    <p><strong>Start Date:</strong> ${rowData[6]}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                    <p><strong>Salary:</strong> ${rowData[7]}</p>
+                    <p><strong>Extn:</strong> ${rowData[8]}</p>
+                    <p><strong>E-mail:</strong> ${rowData[9]}</p>
+                    </div>
+                `;
+                const previewModal = new bootstrap.Modal(document.getElementById("previewModal"));
+                previewModal.show();
+            }
+            if (e.target.classList.contains("edit-row")) {
+                const rowData = table.row(row).data();
+                document.getElementById("editRowId").value = table.row(row).index(); // Store row index
+                document.getElementById("editFirstName").value = rowData[1];
+                document.getElementById("editLastName").value = rowData[2];
+                document.getElementById("editPosition").value = rowData[3];
+                document.getElementById("editOffice").value = rowData[4];
+                document.getElementById("editAge").value = rowData[5];
+                document.getElementById("editStartDate").value = rowData[6];
+                document.getElementById("editSalary").value = rowData[7];
+                document.getElementById("editExtn").value = rowData[8];
+                document.getElementById("editEmail").value = rowData[9];
+                const editModal = new bootstrap.Modal(document.getElementById("editDataModal"));
+                editModal.show();
+            }
+
+            if (e.target.classList.contains("delete-row")) {
+                table.row(row).remove().draw();
+                saveTableData(); // Update localStorage after delete
+            }
+        });
+
+        // Update data after editing
+        document.getElementById("updateData").addEventListener("click", () => {
+            const rowId = document.getElementById("editRowId").value;
+
+            const editProfileInput = document.getElementById("editProfile");
+            let updatedProfileImage = '';
+
+            if (editProfileInput.files.length > 0) {
+                updatedProfileImage = URL.createObjectURL(editProfileInput.files[0]);
+            } else {
+                const existingRowData = table.row(rowId).data();
+                updatedProfileImage = existingRowData[0].src; // Keep existing image if none is uploaded
+            }
+            const updatedData = [
+                `<img src="${updatedProfileImage}" alt="Profile Image" style="width: 50px; height: 50px;" />`,
+                document.getElementById("editFirstName").value,
+                document.getElementById("editLastName").value,
+                document.getElementById("editPosition").value,
+                document.getElementById("editOffice").value,
+                document.getElementById("editAge").value,
+                document.getElementById("editStartDate").value,
+                document.getElementById("editSalary").value,
+                document.getElementById("editExtn").value,
+                document.getElementById("editEmail").value,
+                `
+                <button class="btn btn-info btn-sm preview-row">preview</button>
+                <button class="btn btn-warning btn-sm edit-row">Edit</button>
+                <button class="btn btn-danger btn-sm delete-row">Delete</button>
+                `,
+            ];
+            table.row(rowId).data(updatedData).draw();
+            // Save to localStorage after update
+            saveTableData();
+            // Close the edit modal
+            const editModal = bootstrap.Modal.getInstance(document.getElementById("editDataModal"));
+            editModal.hide();
+        });
+    </script>
+</body>
+</html>
+
